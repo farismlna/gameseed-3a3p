@@ -11,10 +11,19 @@ extends CharacterBody3D
 # Roll Flags
 var can_roll: bool = false
 var is_rolling: bool = false
-
-# Keeps track of the 3D vector direction the player is moving/facing
 var roll_direction: Vector3 = Vector3.FORWARD
 
+# Jump State
+var _jump_count: int = 0
+var _max_jumps: int = 1  # Modified by traits (e.g. double jump = 2)
+
+# LIFECYCLE
+func _ready() -> void:
+	# Listen for trait changes to update ability parameters
+	TraitInventory.trait_equipped.connect(_on_trait_equipped)
+	TraitInventory.trait_unequipped.connect(_on_trait_unequipped)
+
+# PHYSICS
 func _physics_process(delta: float) -> void:
 	
 	# Roll action.
@@ -69,3 +78,50 @@ func start_roll():
 	# Execute cooldown before allowing another dash
 	await get_tree().create_timer(ROLL_COOLDOWN).timeout
 	can_roll = true
+
+
+#  TRAIT INTEGRATION
+## Equip a trait into a slot by id.
+## Called from change_part_menu when player selects a trait.
+func ubah_organ_tubuh(slot: String, trait_id: String) -> void:
+	var trait_data: TraitData = TraitInventory.collected_traits.get(trait_id, null)
+ 
+	if trait_data == null:
+		push_warning("Player: Trait '%s' not found in inventory." % trait_id)
+		return
+ 
+	var success = TraitInventory.equip_trait(trait_data)
+	if not success:
+		# Capacity exceeded, UI should handle showing feedback to player
+		push_warning("Player: Not enough capacity to equip '%s'." % trait_id)
+ 
+## Unequip trait from a slot.
+func lepas_organ_tubuh(slot: String) -> void:
+	TraitInventory.unequip_slot(slot)
+ 
+
+#  TRAIT ABILITY HOOKS
+#  Add ability effects here as traits are implemented
+func _on_trait_equipped(slot: String, trait_data: TraitData) -> void:
+	match trait_data.ability_tag:
+		"double_jump":
+			_max_jumps = 2
+		"speed_boost":
+			SPEED *= 1.5
+		# Add more ability_tags here as new traits are created
+ 
+func _on_trait_unequipped(slot: String) -> void:
+	# Recalculate all active abilities from scratch
+	# This prevents stacking bugs when swapping traits
+	_recalculate_abilities()
+ 
+func _recalculate_abilities() -> void:
+	# Reset to base values first
+	_max_jumps = 1
+	SPEED = 2.0
+ 
+	# Re-apply all currently equipped traits
+	for slot in TraitInventory.equipped_slots:
+		var trait_data = TraitInventory.equipped_slots[slot]
+		if trait_data != null:
+			_on_trait_equipped(slot, trait_data)
