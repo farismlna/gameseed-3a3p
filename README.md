@@ -1,5 +1,5 @@
 # Metamorcapsule
-> A bizarre top-down exploration puzzle game — made for GameSeed Game Jam
+> A bizarre top-down exploration puzzle game - made for GameSeed Game Jam
 
 **Genre:** 2.5D Top-Down Exploration / Puzzle  
 **Engine:** Godot 4.6.2  
@@ -8,17 +8,17 @@
 
 ---
 
-##  About the Game
+## 📖 About the Game
 
 You are a cylinder. You don't know what you are. You don't know where you came from.
 
-So you do what any reasonable cylinder would do — absorb the traits of every animal and object you meet, piece by piece, until you figure it out.
+So you do what any reasonable cylinder would do to absorb the traits of every animal and object you meet, piece by piece, until you figure it out.
 
 *Metamorcapsule* is a short puzzle-exploration game where the player absorbs physical traits from animals and objects in the world, equipping them as body parts to solve puzzles, unlock new areas, and interact with NPCs in increasingly absurd ways.
 
 ---
 
-##  Team
+## 👥 Team
 
 | Name | Role |
 |---|---|
@@ -30,7 +30,7 @@ So you do what any reasonable cylinder would do — absorb the traits of every a
 
 ---
 
-##  System Requirements & Environment Setup
+## 🛠️ System Requirements & Environment Setup
 
 ### Prerequisites
 
@@ -45,7 +45,7 @@ Godot 4 runs natively on all major platforms. No additional configuration is req
 
 ---
 
-##  How to Run the Project
+## 🚀 How to Run the Project
 
 ### 1. Clone the repository
 
@@ -66,13 +66,37 @@ cd gameseed-3a3p
 - Navigate to the cloned folder and select `project.godot`
 - Click **Import & Edit**
 
-### 4. Run the project
+### 4. Required setup after opening (IMPORTANT)
+
+Two things must be configured manually after opening the project. Without these, the game will not run correctly.
+
+#### A. Register TraitInventory as Autoload
+
+```
+Project → Project Settings → Autoload
+Click the folder icon → navigate to: src/traits/trait_inventory.gd
+Node Name: TraitInventory
+Click Add
+```
+
+> Make sure the name is exactly `TraitInventory` — capitalization matters.
+
+#### B. Add "Absorb" Input Action
+
+```
+Project → Project Settings → Input Map
+Type "Absorb" in the Add Action field → click Add
+Click the + icon next to the new action
+Press the F key on your keyboard → click OK
+```
+
+### 5. Run the project
 
 Press **F5** (or the ▶ Play button) to run from the main scene.
 
 ---
 
-##  Exporting for itch.io
+## 📦 Exporting for itch.io
 
 ### Web Export (Recommended for itch.io)
 
@@ -92,7 +116,7 @@ Press **F5** (or the ▶ Play button) to run from the main scene.
 
 ---
 
-##  Git Workflow
+## 🌿 Git Workflow
 
 ### Branch Structure
 
@@ -116,7 +140,7 @@ fix:       perbaikan bug
            contoh: fix: resolve double jump not resetting on land
 
 docs:      perubahan dokumentasi atau README
-           contoh: docs: update export guide for itch.io
+           contoh: docs: update setup instructions
 
 refactor:  merapikan kode tanpa mengubah fungsi
            contoh: refactor: clean up trait equip slot logic
@@ -136,38 +160,37 @@ git checkout dev
 git pull origin dev
 
 # Buat branch baru untuk fitur yang dikerjakan
-git checkout -b feature/trait-absorption
+git checkout -b feature/nama-fitur
 
 # Kerjakan, lalu commit dengan format conventional
 git add .
 git commit -m "feat: implement trait absorption interaction prompt"
 
 # Push dan buat Pull Request ke dev
-git push origin feature/trait-absorption
+git push origin feature/nama-fitur
 ```
 
 ---
 
-##  Project Structure
+## 📁 Project Structure
 
 ```
 gameseed-3a3p/
+├── levels/
+│   └── level_0.tscn
 ├── src/
-│   ├── main.tscn          # Main scene entry point
-│   ├── player/            # Player scenes & scripts
-│   ├── areas/             # Area/level scenes
-│   ├── ui/                # UI scenes (catalogue, HUD, inventory)
-│   └── npcs/              # NPC scenes
-├── scripts/
-│   ├── player/            # Player controller, trait system
-│   ├── traits/            # Individual trait logic
-│   ├── quests/            # Quest manager
-│   └── ui/                # UI logic
-├── assets/
-│   ├── sprites/           # All sprite assets
-│   ├── audio/             # BGM and SFX
-│   └── fonts/             # UI fonts
-├── exports/               # Export output (gitignored)
+│   ├── obj/
+│   │   ├── background/        # Background assets
+│   │   ├── interactable/      # Interactable objects (absorbable.gd)
+│   │   ├── player/            # Player scripts and sprites
+│   │   └── UserInterface/     # UI scenes and scripts
+│   └── traits/
+│       ├── trait_data.gd      # TraitData resource class
+│       ├── trait_inventory.gd # Global trait storage (Autoload)
+│       └── data/              # .tres files for each trait
+├── ost/                       # Background music
+├── sfx/                       # Sound effects
+├── exports/                   # Export output (gitignored)
 └── project.godot
 ```
 
@@ -177,12 +200,19 @@ gameseed-3a3p/
 
 ## ⚠️ Notes for Programmers
 
-- Godot version **must be 4.6.2** — do not use a different minor version as scene files may break
-- All scripts use **GDScript** unless otherwise noted in the file header
-- Trait logic is centralized in `scripts/traits/` — do not hardcode trait behavior inside player scripts
-- If you add a new scene, make sure the folder structure follows the convention above
-- Coordinate with Azfa before making changes to `main.tscn` or the quest manager
+- Godot version **must be atleast 4.6.x version** — do not use a different minor version as scene files may break
+- All scripts use **GDScript** — tabs for indentation, not spaces (Godot will throw a parse error otherwise)
+- Trait logic is centralized in `src/traits/` — do not hardcode trait behavior inside player scripts
+- All new traits should be created as `.tres` files inside `src/traits/data/` — no new `.gd` files needed per trait
+- Coordinate with Azfa before making changes to the quest manager or main scene
+- Each programmer should own their scene files — communicate before editing someone else's scene to avoid merge conflicts
+
+### Known Limitations / TODO
+
+- `change_part_menu.gd` still uses hardcoded `"trait_1"`, `"trait_2"`, `"trait_3"` strings — needs to be updated to read from `TraitInventory.collected_traits`
+- Trait `.tres` files are created manually one by one in the editor — no batch tool yet
+- `PromptLabel` size and position need to be adjusted per object in the scene
 
 ---
 
-*Built with Godot 4.6.2 — GameSeed Game Jam 2025*
+*Built with Godot 4.6.2 - GameSeed Game Jam 2026*
