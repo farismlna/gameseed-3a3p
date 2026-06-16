@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TraitData" format=3 uid="uid://b7r65hm8yc6bv"]
+
+[ext_resource type="Script" uid="uid://dnsqrhbtho1ha" path="res://src/traits/traits_data.gd" id="1_drj3b"]
+
+[resource]
+script = ExtResource("1_drj3b")
+id = "frog_legs"
+display_name = "Frog Legs"
+slot = "legs"
+equip_cost = 3
+description = "Allows double jumping"
+ability_tag = "double_jump"
+metadata/_custom_type_script = "uid://dnsqrhbtho1ha"
