@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://dr136r5sy4uxk" path="res://src/obj/interactable/absorbable.gd" id="4_tfamw"]
 [ext_resource type="Script" uid="uid://dnsqrhbtho1ha" path="res://src/traits/traits_data.gd" id="5_dm5o4"]
 [ext_resource type="Texture2D" uid="uid://dti4bsg8mbv5" path="res://src/obj/player/player.png" id="5_tfamw"]
-[ext_resource type="PackedScene" uid="uid://bapfwuacgo87a" path="res://src/obj/UserInterface/ChangePartMenu.tscn" id="6_7d3si"]
 [ext_resource type="Resource" uid="uid://b7r65hm8yc6bv" path="res://src/traits/data/example_traits.tres" id="6_obtcn"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_nu7sl"]
@@ -97,9 +96,37 @@ texture = ExtResource("5_tfamw")
 [node name="PlayerCollision" type="CollisionShape3D" parent="Player" unique_id=2139240117]
 shape = SubResource("CapsuleShape3D_t218m")
 
+[node name="TraitMenu" type="Node3D" parent="Player" unique_id=1360104878]
+
+[node name="HoverAreas" type="Node3D" parent="Player/TraitMenu" unique_id=523473109]
+
+[node name="Head" type="Area3D" parent="Player/TraitMenu/HoverAreas" unique_id=1889851919]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/TraitMenu/HoverAreas/Head" unique_id=1632728308]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/TraitMenu/HoverAreas/Head" unique_id=351558558]
+
+[node name="Hand" type="Area3D" parent="Player/TraitMenu/HoverAreas" unique_id=385286575]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/TraitMenu/HoverAreas/Hand" unique_id=187925954]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/TraitMenu/HoverAreas/Hand" unique_id=2076484510]
+
+[node name="Body" type="Area3D" parent="Player/TraitMenu/HoverAreas" unique_id=341509708]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/TraitMenu/HoverAreas/Body" unique_id=1774117333]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player/TraitMenu/HoverAreas/Body" unique_id=1061086453]
+
+[node name="Leg" type="Area3D" parent="Player/TraitMenu/HoverAreas" unique_id=118156054]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/TraitMenu/HoverAreas/Leg" unique_id=1867094894]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player/TraitMenu/HoverAreas/Leg" unique_id=1932483335]
+
+[node name="Node3D" type="Node3D" parent="Player/TraitMenu/HoverAreas" unique_id=1527091166]
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=692021529]
 transform = Transform3D(0.70710665, 0.49999982, -0.5000003, 3.872359e-08, 0.70710707, 0.7071065, 0.7071069, -0.4999997, 0.50000006, 0, 5, 0)
 shadow_enabled = true
 shadow_opacity = 0.5
-
-[node name="ChangePartMenu" parent="." unique_id=941617602 instance=ExtResource("6_7d3si")]

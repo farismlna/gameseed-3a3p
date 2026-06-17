@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://bnq6ulsaflpde"]
+
+[ext_resource type="Script" uid="uid://bo6q7yt7r05rn" path="res://src/obj/player/player_cam.gd" id="1_vbegm"]
+[ext_resource type="Texture2D" uid="uid://ch35648c05qv7" path="res://src/obj/background/grid.png" id="2_ehkex"]
+[ext_resource type="Texture2D" uid="uid://dquhc3dampdmt" path="res://src/obj/interactable/stove.png" id="3_xersf"]
+[ext_resource type="Script" uid="uid://dr136r5sy4uxk" path="res://src/obj/interactable/absorbable.gd" id="4_00tp4"]
+[ext_resource type="Script" uid="uid://dnsqrhbtho1ha" path="res://src/traits/traits_data.gd" id="5_77dp3"]
+[ext_resource type="Resource" uid="uid://b7r65hm8yc6bv" path="res://src/traits/data/example_traits.tres" id="6_5tkv4"]
+[ext_resource type="PackedScene" uid="uid://wd0m8krm4j8u" path="res://src/test/Player.tscn" id="7_0m0f1"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_nu7sl"]
+orm_texture = ExtResource("2_ehkex")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_omks2"]
+size = Vector3(6, 3, 6)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2ro2b"]
+
+[node name="test" type="Node3D" unique_id=721413748]
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1001453291]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, -3)
+billboard = 1
+text = "example_obj"
+font_size = 132
+outline_size = 32
+
+[node name="PlayerCam" type="Camera3D" parent="." unique_id=972886338]
+transform = Transform3D(1, 0, 0, 0, 0.7071068, 0.7071068, 0, -0.7071068, 0.7071068, 0, 10, 10)
+current = true
+fov = 60.0
+size = 20.0
+far = 40.0
+script = ExtResource("1_vbegm")
+offset_vector = Vector3(0, 10, 10)
+
+[node name="Baseplate" type="CSGBox3D" parent="." unique_id=209526088]
+use_collision = true
+size = Vector3(30, 0.01, 30)
+material = SubResource("ORMMaterial3D_nu7sl")
+
+[node name="Stove (Contoh Objek)" type="StaticBody3D" parent="." unique_id=2052523020]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 2, 0)
+
+[node name="StoveSprite" type="Sprite3D" parent="Stove (Contoh Objek)" unique_id=800398030]
+pixel_size = 0.0025
+billboard = 1
+alpha_cut = 1
+texture = ExtResource("3_xersf")
+
+[node name="StoveCollision" type="CollisionShape3D" parent="Stove (Contoh Objek)" unique_id=384978716]
+shape = SubResource("BoxShape3D_omks2")
+
+[node name="Stove (Contoh Objek)2" type="StaticBody3D" parent="." unique_id=1143962176]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.646309, 2, 0)
+script = ExtResource("4_00tp4")
+source_traits = Array[ExtResource("5_77dp3")]([ExtResource("6_5tkv4")])
+display_name = "Frog"
+despawn_on_absorb = true
+
+[node name="StoveSprite" type="Sprite3D" parent="Stove (Contoh Objek)2" unique_id=1145179465]
+pixel_size = 0.0025
+billboard = 1
+alpha_cut = 1
+texture = ExtResource("3_xersf")
+
+[node name="AbsorbArea" type="Area3D" parent="Stove (Contoh Objek)2" unique_id=1950473934]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Stove (Contoh Objek)2/AbsorbArea" unique_id=1537665755]
+transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
+shape = SubResource("SphereShape3D_2ro2b")
+
+[node name="PromptLabel" type="Label3D" parent="Stove (Contoh Objek)2" unique_id=725844287]
+billboard = 1
+text = "example_obj"
+font_size = 132
+outline_size = 32
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=692021529]
+transform = Transform3D(0.70710665, 0.49999982, -0.5000003, 3.872359e-08, 0.70710707, 0.7071065, 0.7071069, -0.4999997, 0.50000006, 0, 5, 0)
+shadow_enabled = true
+shadow_opacity = 0.5
+
+[node name="Player" parent="." unique_id=712337205 instance=ExtResource("7_0m0f1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
