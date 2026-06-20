@@ -47,10 +47,22 @@ func _open_and_build_all_menus() -> void:
 	for slot_key in mapping:
 		var traits_list = []
 		var preparation_node = get_node_or_null("/root/PreparationMenu")
+		
 		if preparation_node:
-			if slot_key == "head":
+			# Membaca data secara dinamis dari keempat jenis kontainer panel kiri UI
+			if slot_key == "head" and preparation_node.head_slots_container:
 				for slot in preparation_node.head_slots_container.get_children():
-					if slot.held_trait_data: traits_list.append(slot.held_trait_data)
+					if slot is InventorySlot and slot.held_trait_data: traits_list.append(slot.held_trait_data)
+			elif slot_key == "hand_right" and preparation_node.hand_slots_container:
+				for slot in preparation_node.hand_slots_container.get_children():
+					if slot is InventorySlot and slot.held_trait_data: traits_list.append(slot.held_trait_data)
+			elif slot_key == "body" and preparation_node.body_slots_container:
+				for slot in preparation_node.body_slots_container.get_children():
+					if slot is InventorySlot and slot.held_trait_data: traits_list.append(slot.held_trait_data)
+			elif slot_key == "legs" and preparation_node.leg_slots_container:
+				for slot in preparation_node.leg_slots_container.get_children():
+					if slot is InventorySlot and slot.held_trait_data: traits_list.append(slot.held_trait_data)
+
 		slot_data[slot_key]["traits"] = traits_list
 		
 		var target_node = hover_areas.get_node_or_null(mapping[slot_key])

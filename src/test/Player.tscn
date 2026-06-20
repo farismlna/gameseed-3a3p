@@ -19,6 +19,7 @@ height = 0.32156372
 height = 0.25265503
 
 [node name="Player" type="CharacterBody3D" unique_id=712337205]
+process_mode = 3
 script = ExtResource("1_kpjcp")
 SPEED = 3.0
 JUMP_VELOCITY = 7.5

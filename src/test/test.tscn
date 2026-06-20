@@ -82,4 +82,4 @@ shadow_enabled = true
 shadow_opacity = 0.5
 
 [node name="Player" parent="." unique_id=712337205 instance=ExtResource("7_0m0f1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1)

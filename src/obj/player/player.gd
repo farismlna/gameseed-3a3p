@@ -17,8 +17,10 @@ var roll_direction: Vector3 = Vector3.FORWARD
 var _jump_count: int = 0
 var _max_jumps: int = 1  # Modified by traits (e.g. double jump = 2)
 
+# Menu UI
 var preparation_menu_scene = preload("res://src/obj/UserInterface/preparation_menu.tscn")
 var active_preparation_menu: Control = null
+var is_inventory_open: bool = false
 
 # LIFECYCLE
 func _ready() -> void:
@@ -28,6 +30,10 @@ func _ready() -> void:
 
 # PHYSICS
 func _physics_process(delta: float) -> void:
+	if is_inventory_open:
+		velocity = Vector3.ZERO # Paksa player diam di tempat
+		move_and_slide()
+		return
 	
 	# Roll action.
 	if is_rolling:
@@ -69,6 +75,8 @@ func _physics_process(delta: float) -> void:
 		can_roll = false
 
 	move_and_slide()
+	
+	
 
 func start_roll():
 	is_rolling = true
@@ -132,12 +140,14 @@ func _recalculate_abilities() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("toggle_inventory"):
 		if active_preparation_menu == null:
-			# Jika menu belum ada, buat (spawn) dan munculkan di layar
+			is_inventory_open = true
 			active_preparation_menu = preparation_menu_scene.instantiate() as Control
 			get_tree().root.add_child(active_preparation_menu)
+			get_tree().paused = true
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		else:
-			# Jika menu sudah terbuka, tutup dan hapus dari memori
 			active_preparation_menu.queue_free()
 			active_preparation_menu = null
+			get_tree().paused = false
+			is_inventory_open = false
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
