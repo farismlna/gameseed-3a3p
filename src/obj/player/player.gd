@@ -17,6 +17,9 @@ var roll_direction: Vector3 = Vector3.FORWARD
 var _jump_count: int = 0
 var _max_jumps: int = 1  # Modified by traits (e.g. double jump = 2)
 
+var preparation_menu_scene = preload("res://src/obj/UserInterface/preparation_menu.tscn")
+var active_preparation_menu: Control = null
+
 # LIFECYCLE
 func _ready() -> void:
 	# Listen for trait changes to update ability parameters
@@ -125,3 +128,16 @@ func _recalculate_abilities() -> void:
 		var trait_data = TraitInventory.equipped_slots[slot]
 		if trait_data != null:
 			_on_trait_equipped(slot, trait_data)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_inventory"):
+		if active_preparation_menu == null:
+			# Jika menu belum ada, buat (spawn) dan munculkan di layar
+			active_preparation_menu = preparation_menu_scene.instantiate() as Control
+			get_tree().root.add_child(active_preparation_menu)
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		else:
+			# Jika menu sudah terbuka, tutup dan hapus dari memori
+			active_preparation_menu.queue_free()
+			active_preparation_menu = null
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

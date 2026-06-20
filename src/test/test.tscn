@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://dr136r5sy4uxk" path="res://src/obj/interactable/absorbable.gd" id="4_00tp4"]
 [ext_resource type="Script" uid="uid://dnsqrhbtho1ha" path="res://src/traits/traits_data.gd" id="5_77dp3"]
 [ext_resource type="Resource" uid="uid://b7r65hm8yc6bv" path="res://src/traits/data/example_traits.tres" id="6_5tkv4"]
-[ext_resource type="PackedScene" uid="uid://wd0m8krm4j8u" path="res://src/test/Player.tscn" id="7_0m0f1"]
+[ext_resource type="PackedScene" uid="uid://wd0m8krm4j8u" path="res://src/test/player.tscn" id="7_0m0f1"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_nu7sl"]
 orm_texture = ExtResource("2_ehkex")
@@ -82,4 +82,4 @@ shadow_enabled = true
 shadow_opacity = 0.5
 
 [node name="Player" parent="." unique_id=712337205 instance=ExtResource("7_0m0f1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

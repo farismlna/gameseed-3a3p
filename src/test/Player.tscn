@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://b0csim8vgdsnt" path="res://src/obj/player/player.gd" id="1_kpjcp"]
 [ext_resource type="Texture2D" uid="uid://dti4bsg8mbv5" path="res://src/obj/player/player.png" id="2_kne1u"]
 [ext_resource type="Script" uid="uid://bh7381acayowe" path="res://src/test/trait_menu.gd" id="3_kne1u"]
-[ext_resource type="Texture2D" uid="uid://eqg1ks5ru1xx" path="res://src/test/circle.png" id="4_38kaf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t218m"]
 
@@ -49,11 +48,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18241489, 0)
 shape = SubResource("CylinderShape3D_kne1u")
 debug_color = Color(1, 0, 0, 1)
 
-[node name="AnimRing" type="Sprite3D" parent="TraitMenu/HoverAreas/Head" unique_id=738280731]
-transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-billboard = 1
-texture = ExtResource("4_38kaf")
-
 [node name="Hand" type="Area3D" parent="TraitMenu/HoverAreas" unique_id=1664230479]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3086536, 0)
 
@@ -61,11 +55,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3086536, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.014144897, 0)
 shape = SubResource("CylinderShape3D_e80uo")
 debug_color = Color(18.53297, 0, 0, 1)
-
-[node name="AnimRing" type="Sprite3D" parent="TraitMenu/HoverAreas/Hand" unique_id=400618266]
-transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-billboard = 1
-texture = ExtResource("4_38kaf")
 
 [node name="Body" type="Area3D" parent="TraitMenu/HoverAreas" unique_id=2013166632]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17319036, 0)
@@ -75,11 +64,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0030059814, 0)
 shape = SubResource("CylinderShape3D_cxr5p")
 debug_color = Color(18.173782, 0, 0, 1)
 
-[node name="AnimRing" type="Sprite3D" parent="TraitMenu/HoverAreas/Body" unique_id=778523419]
-transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-billboard = 1
-texture = ExtResource("4_38kaf")
-
 [node name="Leg" type="Area3D" parent="TraitMenu/HoverAreas" unique_id=1034800353]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6474644, 0)
 
@@ -87,11 +71,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6474644, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.016996682, 0)
 shape = SubResource("CylinderShape3D_tdg3f")
 debug_color = Color(18.712564, 0, 0, 1)
-
-[node name="AnimRing" type="Sprite3D" parent="TraitMenu/HoverAreas/Leg" unique_id=891418839]
-transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-billboard = 1
-texture = ExtResource("4_38kaf")
 
 [node name="CarouselPivot" type="Node3D" parent="TraitMenu" unique_id=758083900]
 
