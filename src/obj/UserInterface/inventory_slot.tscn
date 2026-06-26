@@ -11,5 +11,6 @@ offset_right = -1820.0
 offset_bottom = -980.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 0
 expand_mode = 1
 script = ExtResource("1_3o3nt")

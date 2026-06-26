@@ -18,12 +18,17 @@ var _jump_count: int = 0
 var _max_jumps: int = 1  # Modified by traits (e.g. double jump = 2)
 
 # Menu UI
-var preparation_menu_scene = preload("res://src/obj/UserInterface/preparation_menu.tscn")
 var active_preparation_menu: Control = null
 var is_inventory_open: bool = false
 
 # LIFECYCLE
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
+	active_preparation_menu = preload("res://src/obj/UserInterface/preparation_menu.tscn").instantiate() as Control
+	active_preparation_menu.hide()
+	get_tree().root.call_deferred("add_child", active_preparation_menu)
+	
 	# Listen for trait changes to update ability parameters
 	TraitInventory.trait_equipped.connect(_on_trait_equipped)
 	TraitInventory.trait_unequipped.connect(_on_trait_unequipped)
@@ -47,10 +52,13 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+	else:
+		_jump_count = 0 
 
 	# Handle jump.
-	if Input.is_action_pressed("Jump") and is_on_floor():
+	if Input.is_action_just_pressed("Jump") and _jump_count < _max_jumps:
 		velocity.y = JUMP_VELOCITY
+		_jump_count += 1
 	
 	# Handle roll.
 	if Input.is_action_just_pressed("Roll") and can_roll:
@@ -77,7 +85,6 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	
-
 func start_roll():
 	is_rolling = true
 	can_roll = false
@@ -138,16 +145,15 @@ func _recalculate_abilities() -> void:
 			_on_trait_equipped(slot, trait_data)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("toggle_inventory"):
-		if active_preparation_menu == null:
+	if Input.is_action_just_pressed("toggle_inventory"):
+		if not is_inventory_open:
 			is_inventory_open = true
-			active_preparation_menu = preparation_menu_scene.instantiate() as Control
-			get_tree().root.add_child(active_preparation_menu)
+			active_preparation_menu._build_ui_slots()  # refresh isi sebelum tampil
+			active_preparation_menu.show()
 			get_tree().paused = true
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		else:
-			active_preparation_menu.queue_free()
-			active_preparation_menu = null
-			get_tree().paused = false
 			is_inventory_open = false
+			active_preparation_menu.hide()
+			get_tree().paused = false
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

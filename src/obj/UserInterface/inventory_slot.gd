@@ -1,16 +1,15 @@
 extends TextureRect
 class_name InventorySlot
 
+@export var placeholder_texture: Texture2D = null
+
 var held_trait_data: TraitData = null
 var target_slot_type: String = ""
 
 func display_trait(trait_data: TraitData) -> void:
 	held_trait_data = trait_data
 	if trait_data:
-		if trait_data.icon:
-			texture = trait_data.icon
-		else:
-			texture = load("res://src/obj/UserInterface/stove.png")
+		texture = trait_data.icon if trait_data.icon else placeholder_texture
 	else:
 		texture = null
 
@@ -32,6 +31,7 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 
 func _can_drop_data(at_position: Vector2, data: Variant) -> bool:
 	if data is InventorySlot:
+		print("is InventorySlot, target_slot_type: ", target_slot_type, " | trait slot: ", data.held_trait_data.slot) #debugging
 		if target_slot_type != "" and data.held_trait_data.slot != target_slot_type:
 			return false
 		return true

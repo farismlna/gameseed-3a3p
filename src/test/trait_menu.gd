@@ -17,11 +17,11 @@ func _ready() -> void:
 	carousel_pivot.hide()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("change_part_menu"):
+	if event.is_action_pressed("trait_menu"):
 		is_holding_e = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		_open_and_build_all_menus()
-	elif event.is_action_released("change_part_menu"):
+	elif event.is_action_released("trait_menu"):
 		is_holding_e = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		_clear_and_close_menu()

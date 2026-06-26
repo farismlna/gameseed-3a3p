@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://dr136r5sy4uxk" path="res://src/obj/interactable/absorbable.gd" id="4_00tp4"]
 [ext_resource type="Script" uid="uid://dnsqrhbtho1ha" path="res://src/traits/traits_data.gd" id="5_77dp3"]
 [ext_resource type="Resource" uid="uid://b7r65hm8yc6bv" path="res://src/traits/data/example_traits.tres" id="6_5tkv4"]
-[ext_resource type="PackedScene" uid="uid://wd0m8krm4j8u" path="res://src/test/player.tscn" id="7_0m0f1"]
+[ext_resource type="PackedScene" uid="uid://wd0m8krm4j8u" path="res://src/test/Player.tscn" id="7_0m0f1"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_nu7sl"]
 orm_texture = ExtResource("2_ehkex")
@@ -35,6 +35,7 @@ script = ExtResource("1_vbegm")
 offset_vector = Vector3(0, 10, 10)
 
 [node name="Baseplate" type="CSGBox3D" parent="." unique_id=209526088]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00025510788, -0.02572918, 0.022482395)
 use_collision = true
 size = Vector3(30, 0.01, 30)
 material = SubResource("ORMMaterial3D_nu7sl")
