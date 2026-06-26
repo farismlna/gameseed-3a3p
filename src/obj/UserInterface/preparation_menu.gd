@@ -1,14 +1,15 @@
 extends Control
 
-@onready var inventory_grid = $HBoxContainer/RightPanel/InventoryGrid
-@onready var head_slots_container = $HBoxContainer/LeftPanel/HeadSlots
-@onready var hand_slots_container = $HBoxContainer/LeftPanel/HandSlots
-@onready var body_slots_container = $HBoxContainer/LeftPanel/BodySlots
-@onready var legs_slots_container = $HBoxContainer/LeftPanel/LegSlots # ◄── Diubah menjadi LegSlots agar tidak eror lagi
+@onready var inventory_grid = $MarginContainer/HBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/RightPanel/InventoryGrid
+@onready var head_slots_container = $MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel/HeadSlots
+@onready var hand_slots_container = $MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel/HandSlots
+@onready var body_slots_container = $MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel/BodySlots
+@onready var legs_slots_container = $MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel/LegSlots
 
 func _ready() -> void:
 	name = "PreparationMenu"
 	_setup_static_slots()
+	_populate_equipped_slots()
 	_build_ui_slots()
 
 func _setup_static_slots() -> void:
@@ -57,6 +58,23 @@ func _build_ui_slots() -> void:
 		slot_ui.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		
 		slot_ui.display_trait(trait_data)
+
+func _populate_equipped_slots() -> void:
+	if head_slots_container and head_slots_container.get_child_count() > 0:
+		var slot = head_slots_container.get_child(0) as InventorySlot
+		if slot: slot.display_trait(TraitInventory.get_equipped("head"))
+		
+	if hand_slots_container and hand_slots_container.get_child_count() > 0:
+		var slot = hand_slots_container.get_child(0) as InventorySlot
+		if slot: slot.display_trait(TraitInventory.get_equipped("hand_right"))
+
+	if body_slots_container and body_slots_container.get_child_count() > 0:
+		var slot = body_slots_container.get_child(0) as InventorySlot
+		if slot: slot.display_trait(TraitInventory.get_equipped("body"))
+
+	if legs_slots_container and legs_slots_container.get_child_count() > 0:
+		var slot = legs_slots_container.get_child(0) as InventorySlot
+		if slot: slot.display_trait(TraitInventory.get_equipped("legs"))
 
 func save_layout_to_inventory() -> void:
 	# Reset status lama di database global sebelum menimpa susunan baru

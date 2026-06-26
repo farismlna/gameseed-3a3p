@@ -1,6 +1,32 @@
-[gd_scene format=3 uid="uid://b8cmrmiohlijd"]
+[gd_scene load_steps=5 format=3 uid="uid://b8cmrmiohlijd"]
 
 [ext_resource type="Script" uid="uid://dqrutensomqfo" path="res://src/obj/UserInterface/preparation_menu.gd" id="1_hribr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.0784314, 0.0901961, 0.109804, 0.705882)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.215686, 0.247059, 0.301961, 0.6)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot"]
+bg_color = Color(0.0392157, 0.0470588, 0.0588235, 0.6)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.180392, 0.207843, 0.254902, 0.5)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="PreparationMenu" type="Control" unique_id=431881062]
 process_mode = 2
@@ -12,47 +38,185 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hribr")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=761755871]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0470588, 0.054902, 0.0627451, 0.882353)
 
-[node name="LeftPanel" type="VBoxContainer" parent="HBoxContainer" unique_id=1751435740]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 60
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 60
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=761755871]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="LeftPanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(380, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/LeftPanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="LeftPanel" type="VBoxContainer" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer" unique_id=1751435740]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "PLAYER LOADOUT"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel"]
 layout_mode = 2
 
-[node name="HeadLabel" type="Label" parent="HBoxContainer/LeftPanel" unique_id=910465987]
+[node name="HeadLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel" unique_id=910465987]
 layout_mode = 2
-text = "HEAD"
+theme_override_font_sizes/font_size = 16
+text = "HEAD SLOT"
 
-[node name="HeadSlots" type="HBoxContainer" parent="HBoxContainer/LeftPanel" unique_id=1522556017]
-layout_mode = 2
-
-[node name="HandLabel" type="Label" parent="HBoxContainer/LeftPanel" unique_id=900617414]
-layout_mode = 2
-text = "HAND"
-
-[node name="HandSlots" type="HBoxContainer" parent="HBoxContainer/LeftPanel" unique_id=1584148099]
+[node name="HeadSlots" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel" unique_id=1522556017]
 layout_mode = 2
 
-[node name="BodyLabel" type="Label" parent="HBoxContainer/LeftPanel" unique_id=64666225]
+[node name="Slot" type="TextureRect" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel/HeadSlots"]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
-text = "BODY"
+expand_mode = 1
+stretch_mode = 5
 
-[node name="BodySlots" type="HBoxContainer" parent="HBoxContainer/LeftPanel" unique_id=1354144388]
+[node name="BG" type="Panel" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel/HeadSlots/Slot"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="HandLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel" unique_id=900617414]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "HAND SLOT"
+
+[node name="HandSlots" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel" unique_id=1584148099]
 layout_mode = 2
 
-[node name="LegLabel" type="Label" parent="HBoxContainer/LeftPanel" unique_id=1805613028]
+[node name="Slot" type="TextureRect" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel/HandSlots"]
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
-text = "LEG"
+expand_mode = 1
+stretch_mode = 5
 
-[node name="LegSlots" type="HBoxContainer" parent="HBoxContainer/LeftPanel" unique_id=499218876]
+[node name="BG" type="Panel" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel/HandSlots/Slot"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="BodyLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel" unique_id=64666225]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "BODY SLOT"
+
+[node name="BodySlots" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel" unique_id=1354144388]
 layout_mode = 2
 
-[node name="VSeparator" type="VSeparator" parent="HBoxContainer" unique_id=1912694803]
+[node name="Slot" type="TextureRect" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel/BodySlots"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BG" type="Panel" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel/BodySlots/Slot"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="LegLabel" type="Label" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel" unique_id=1805613028]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "LEGS SLOT"
+
+[node name="LegSlots" type="HBoxContainer" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel" unique_id=499218876]
 layout_mode = 2
 
-[node name="RightPanel" type="ScrollContainer" parent="HBoxContainer" unique_id=1108257213]
+[node name="Slot" type="TextureRect" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel/LegSlots"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BG" type="Panel" parent="MarginContainer/HBoxContainer/LeftPanelContainer/MarginContainer/LeftPanel/LegSlots/Slot"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="RightPanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/RightPanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/RightPanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Title" type="Label" parent="MarginContainer/HBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "ABSORBED TRAITS"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="InventoryGrid" type="GridContainer" parent="HBoxContainer/RightPanel" unique_id=1905154909]
+[node name="RightPanel" type="ScrollContainer" parent="MarginContainer/HBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer" unique_id=1108257213]
 layout_mode = 2
+size_flags_vertical = 3
+
+[node name="InventoryGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/RightPanelContainer/MarginContainer/VBoxContainer/RightPanel" unique_id=1905154909]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 15
+theme_override_constants/v_separation = 15
+columns = 4

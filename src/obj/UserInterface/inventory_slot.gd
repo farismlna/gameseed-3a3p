@@ -6,10 +6,13 @@ var target_slot_type: String = ""
 
 func display_trait(trait_data: TraitData) -> void:
 	held_trait_data = trait_data
-	if trait_data and trait_data.icon:
-		texture = trait_data.icon
+	if trait_data:
+		if trait_data.icon:
+			texture = trait_data.icon
+		else:
+			texture = load("res://src/obj/UserInterface/stove.png")
 	else:
-		texture = load("res://src/obj/UserInterface/stove.png")
+		texture = null
 
 func clear_slot() -> void:
 	held_trait_data = null

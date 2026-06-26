@@ -59,9 +59,12 @@ func _open_and_build_all_menus() -> void:
 			elif slot_key == "body" and preparation_node.body_slots_container:
 				for slot in preparation_node.body_slots_container.get_children():
 					if slot is InventorySlot and slot.held_trait_data: traits_list.append(slot.held_trait_data)
-			elif slot_key == "legs" and preparation_node.leg_slots_container:
-				for slot in preparation_node.leg_slots_container.get_children():
+			elif slot_key == "legs" and preparation_node.legs_slots_container:
+				for slot in preparation_node.legs_slots_container.get_children():
 					if slot is InventorySlot and slot.held_trait_data: traits_list.append(slot.held_trait_data)
+
+		if traits_list.is_empty():
+			traits_list = TraitInventory.get_collected_for_slot(slot_key)
 
 		slot_data[slot_key]["traits"] = traits_list
 		
