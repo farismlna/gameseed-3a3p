@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://dquhc3dampdmt" path="res://src/obj/interactable/stove.png" id="3_xersf"]
 [ext_resource type="Script" uid="uid://dr136r5sy4uxk" path="res://src/obj/interactable/absorbable.gd" id="4_00tp4"]
 [ext_resource type="Script" uid="uid://dnsqrhbtho1ha" path="res://src/traits/traits_data.gd" id="5_77dp3"]
-[ext_resource type="Resource" uid="uid://b7r65hm8yc6bv" path="res://src/traits/data/example_traits.tres" id="6_5tkv4"]
-[ext_resource type="PackedScene" uid="uid://wd0m8krm4j8u" path="res://src/test/Player.tscn" id="7_0m0f1"]
+[ext_resource type="Resource" uid="uid://b7r65hm8yc6bv" path="res://src/traits/example_traits.tres" id="6_5tkv4"]
+[ext_resource type="PackedScene" uid="uid://wd0m8krm4j8u" path="res://src/test/player.tscn" id="7_0m0f1"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_nu7sl"]
 orm_texture = ExtResource("2_ehkex")

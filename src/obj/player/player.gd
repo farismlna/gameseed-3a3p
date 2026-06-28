@@ -7,6 +7,11 @@ extends CharacterBody3D
 @export var JUMP_VELOCITY = 4.5
 @export var ROLL_DURATION = 0.4 # How long the roll lasts (in seconds)
 @export var ROLL_COOLDOWN = 0.6 # Time between dashes
+@export var MAX_SAFE_FALL_DISTANCE: float = 8.0 # Jarak jatuh maksimal (dalam meter) sebelum mati instan
+
+var _highest_y: float = 0.0
+var _was_in_air: bool = false
+var _negate_fall_damage: bool = false # Diaktifkan oleh trait kaki kucing
 
 # Roll Flags
 var can_roll: bool = false
@@ -52,8 +57,25 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+
+		# Jika baru pertama kali lepas dari lantai, catat tinggi awal Y
+		if not _was_in_air:
+			_highest_y = global_position.y
+			_was_in_air = true
+		else:
+			# Update terus jika pemain ternyata melompat lebih tinggi dari titik awal
+			if global_position.y > _highest_y:
+				_highest_y = global_position.y
 	else:
 		_jump_count = 0 
+		if _was_in_air:
+			var fall_distance = _highest_y - global_position.y
+			
+			# EKSEKUSI MATI: Jika jarak melebihi threshold DAN tidak punya efek anti-fall damage
+			if fall_distance > MAX_SAFE_FALL_DISTANCE and not _negate_fall_damage:
+				_die()
+				
+			_was_in_air = false
 
 	# Handle jump.
 	if Input.is_action_just_pressed("Jump") and _jump_count < _max_jumps:
@@ -126,6 +148,8 @@ func _on_trait_equipped(slot: String, trait_data: TraitData) -> void:
 			_max_jumps = 2
 		"speed_boost":
 			SPEED *= 1.5
+		"cat_legs":
+			_negate_fall_damage = true
 		# Add more ability_tags here as new traits are created
  
 func _on_trait_unequipped(slot: String) -> void:
@@ -137,7 +161,7 @@ func _recalculate_abilities() -> void:
 	# Reset to base values first
 	_max_jumps = 1
 	SPEED = 2.0
- 
+	_negate_fall_damage = false
 	# Re-apply all currently equipped traits
 	for slot in TraitInventory.equipped_slots:
 		var trait_data = TraitInventory.equipped_slots[slot]
@@ -157,3 +181,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			active_preparation_menu.hide()
 			get_tree().paused = false
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func _die() -> void:
+	# Handle player death (e.g., respawn, game over, etc.)
+	print("Player has died due to fall damage.")
+	# For now, just reset position to a safe point (this should be replaced with proper death handling)
+	global_position = Vector3(0, 5, 0)  # Example respawn position
+	velocity = Vector3.ZERO
