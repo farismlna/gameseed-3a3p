@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TraitData" format=3]
+
+[ext_resource type="Script" path="res://src/traits/traits_data.gd" id="1_trait"]
+
+[resource]
+script = ExtResource("1_trait")
+id = "cat_power_paws"
+display_name = "Cat Power Paws"
+slot = "legs"
+equip_cost = 3
+description = "Springy cat legs allow a double jump."
+ability_tag = "double_jump"
+metadata/_custom_type_script = "res://src/traits/traits_data.gd"

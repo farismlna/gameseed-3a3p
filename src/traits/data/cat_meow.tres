@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TraitData" format=3]
+
+[ext_resource type="Script" path="res://src/traits/traits_data.gd" id="1_trait"]
+
+[resource]
+script = ExtResource("1_trait")
+id = "cat_meow"
+display_name = "Meow"
+slot = "head"
+equip_cost = 1
+description = "A deeply convincing cat sound."
+ability_tag = "meow"
+metadata/_custom_type_script = "res://src/traits/traits_data.gd"

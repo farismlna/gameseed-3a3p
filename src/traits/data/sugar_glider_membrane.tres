@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TraitData" format=3]
+
+[ext_resource type="Script" path="res://src/traits/traits_data.gd" id="1_trait"]
+
+[resource]
+script = ExtResource("1_trait")
+id = "sugar_glider_membrane"
+display_name = "Sugar Glider Membrane"
+slot = "body"
+equip_cost = 3
+description = "Hold Space while falling to glide."
+ability_tag = "glide"
+metadata/_custom_type_script = "res://src/traits/traits_data.gd"

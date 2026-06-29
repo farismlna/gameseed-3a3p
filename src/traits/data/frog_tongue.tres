@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TraitData" format=3]
+
+[ext_resource type="Script" path="res://src/traits/traits_data.gd" id="1_trait"]
+
+[resource]
+script = ExtResource("1_trait")
+id = "frog_tongue"
+display_name = "Sticky Tongue"
+slot = "head"
+equip_cost = 2
+description = "A long tongue for distant grabs and puzzle switches."
+ability_tag = "sticky_tongue"
+metadata/_custom_type_script = "res://src/traits/traits_data.gd"

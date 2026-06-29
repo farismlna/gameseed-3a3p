@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TraitData" format=3]
+
+[ext_resource type="Script" path="res://src/traits/traits_data.gd" id="1_trait"]
+
+[resource]
+script = ExtResource("1_trait")
+id = "human_hands"
+display_name = "Human Hands"
+slot = "hand_right"
+equip_cost = 2
+description = "Useful hands for push, pull, and civilized button pressing."
+ability_tag = "push_pull"
+metadata/_custom_type_script = "res://src/traits/traits_data.gd"

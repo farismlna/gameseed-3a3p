@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TraitData" format=3]
+
+[ext_resource type="Script" path="res://src/traits/traits_data.gd" id="1_trait"]
+
+[resource]
+script = ExtResource("1_trait")
+id = "dog_bark"
+display_name = "Bark"
+slot = "head"
+equip_cost = 1
+description = "A loud bark for animals, townsfolk, and suspicious geese."
+ability_tag = "bark"
+metadata/_custom_type_script = "res://src/traits/traits_data.gd"
