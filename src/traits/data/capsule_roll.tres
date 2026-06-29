@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TraitData" format=3]
+
+[ext_resource type="Script" path="res://src/traits/traits_data.gd" id="1_trait"]
+
+[resource]
+script = ExtResource("1_trait")
+id = "capsule_roll"
+display_name = "Capsule Roll"
+slot = "body"
+equip_cost = 1
+description = "Dash forward and flatten briefly. Press R while moving."
+ability_tag = "roll"
+metadata/_custom_type_script = "res://src/traits/traits_data.gd"

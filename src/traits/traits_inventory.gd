@@ -31,6 +31,9 @@ signal trait_equipped(slot: String, trait_data: TraitData)
 ## Emitted when a trait is unequipped from a slot
 signal trait_unequipped(slot: String)
 
+## Emitted whenever collected/equipped trait state changes
+signal inventory_changed
+
 ## Called when player absorbs an absorbable object.
 ## Adds all traits from that object to collected_traits.
 ## Returns list of newly absorbed TraitData (excludes duplicates).
@@ -46,6 +49,7 @@ func absorb_from(source_traits: Array[TraitData]) -> Array[TraitData]:
 			collected_traits[trait_data.id] = trait_data
 			newly_absorbed.append(trait_data)
 			trait_absorbed.emit(trait_data)
+			inventory_changed.emit()
 
 	return newly_absorbed
 
@@ -73,8 +77,12 @@ func equip_trait(trait_data: TraitData) -> bool:
 	if would_exceed_capacity(trait_data):
 		return false
 
+	var previous_trait = equipped_slots[trait_data.slot]
 	equipped_slots[trait_data.slot] = trait_data
+	if previous_trait != null and previous_trait != trait_data:
+		trait_unequipped.emit(trait_data.slot)
 	trait_equipped.emit(trait_data.slot, trait_data)
+	inventory_changed.emit()
 	return true
 
 ## Unequip whatever is in the given slot.
@@ -83,8 +91,10 @@ func unequip_slot(slot: String) -> void:
 		push_warning("TraitInventory: Unknown slot '%s'." % slot)
 		return
 
-	equipped_slots[slot] = null
-	trait_unequipped.emit(slot)
+	if equipped_slots[slot] != null:
+		equipped_slots[slot] = null
+		trait_unequipped.emit(slot)
+		inventory_changed.emit()
 
 ## Returns true if player currently has a specific ability active
 ## Use this in movement/puzzle scripts to check trait abilities
@@ -107,3 +117,18 @@ func get_collected_for_slot(slot: String) -> Array[TraitData]:
 ## Returns the currently equipped trait for a slot, or null
 func get_equipped(slot: String) -> TraitData:
 	return equipped_slots.get(slot, null)
+
+## Returns true only when every requested ability is currently equipped.
+func has_all_abilities(required_abilities: PackedStringArray) -> bool:
+	for ability_tag in required_abilities:
+		if not has_ability(ability_tag):
+			return false
+	return true
+
+## Human-readable list for gate prompts and debug UI.
+func get_missing_abilities(required_abilities: PackedStringArray) -> PackedStringArray:
+	var missing: PackedStringArray = []
+	for ability_tag in required_abilities:
+		if not has_ability(ability_tag):
+			missing.append(ability_tag)
+	return missing

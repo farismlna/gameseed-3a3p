@@ -9,6 +9,16 @@
 [ext_resource type="Texture2D" uid="uid://dti4bsg8mbv5" path="res://src/obj/player/player.png" id="5_tfamw"]
 [ext_resource type="PackedScene" uid="uid://bapfwuacgo87a" path="res://src/obj/UserInterface/ChangePartMenu.tscn" id="6_7d3si"]
 [ext_resource type="Resource" uid="uid://b7r65hm8yc6bv" path="res://src/traits/data/example_traits.tres" id="6_obtcn"]
+[ext_resource type="Resource" path="res://src/traits/data/capsule_roll.tres" id="7_roll"]
+[ext_resource type="Resource" path="res://src/traits/data/corgi_small_legs.tres" id="8_corgi"]
+[ext_resource type="Resource" path="res://src/traits/data/cat_power_paws.tres" id="9_catpaws"]
+[ext_resource type="Resource" path="res://src/traits/data/cat_meow.tres" id="10_meow"]
+[ext_resource type="Resource" path="res://src/traits/data/frog_legs.tres" id="11_froglegs"]
+[ext_resource type="Resource" path="res://src/traits/data/frog_tongue.tres" id="12_tongue"]
+[ext_resource type="Resource" path="res://src/traits/data/sugar_glider_membrane.tres" id="13_glide"]
+[ext_resource type="Resource" path="res://src/traits/data/human_hands.tres" id="14_hands"]
+[ext_resource type="Resource" path="res://src/traits/data/dog_bark.tres" id="15_bark"]
+[ext_resource type="Script" path="res://src/obj/interactable/trait_gate.gd" id="16_gate"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_nu7sl"]
 orm_texture = ExtResource("2_7d3si")
@@ -20,13 +30,22 @@ size = Vector3(6, 3, 6)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_t218m"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_gate"]
+size = Vector3(4, 2.5, 0.75)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gate_area"]
+size = Vector3(6, 4, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_absorbable"]
+size = Vector3(1.5, 2, 1.5)
+
 [node name="Level0" type="Node3D" unique_id=721413748]
 
 [node name="Label3D" type="Label3D" parent="." unique_id=1001453291]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 5, -3)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 5)
 billboard = 1
-text = "example_obj"
-font_size = 132
+text = "Metamorcapsule Prototype\nWASD move | F absorb/open | E parts | R roll | Q action"
+font_size = 56
 outline_size = 32
 
 [node name="PlayerCam" type="Camera3D" parent="." unique_id=972886338 node_paths=PackedStringArray("player")]
@@ -54,12 +73,12 @@ alpha_cut = 1
 texture = ExtResource("3_jum3j")
 
 [node name="StoveCollision" type="CollisionShape3D" parent="Stove (Contoh Objek)" unique_id=384978716]
-shape = SubResource("BoxShape3D_omks2")
+shape = SubResource("BoxShape3D_absorbable")
 
 [node name="Stove (Contoh Objek)2" type="StaticBody3D" parent="." unique_id=1143962176]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.646309, 2, 0)
 script = ExtResource("4_tfamw")
-source_traits = Array[ExtResource("5_dm5o4")]([ExtResource("6_obtcn")])
+source_traits = Array[ExtResource("5_dm5o4")]([ExtResource("11_froglegs"), ExtResource("12_tongue")])
 display_name = "Frog"
 despawn_on_absorb = true
 
@@ -72,7 +91,7 @@ texture = ExtResource("3_jum3j")
 [node name="AbsorbArea" type="Area3D" parent="Stove (Contoh Objek)2" unique_id=1950473934]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Stove (Contoh Objek)2/AbsorbArea" unique_id=1537665755]
-transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 shape = SubResource("SphereShape3D_2ro2b")
 
 [node name="PromptLabel" type="Label3D" parent="Stove (Contoh Objek)2" unique_id=725844287]
@@ -80,6 +99,311 @@ billboard = 1
 text = "example_obj"
 font_size = 132
 outline_size = 32
+
+[node name="Capsule Memory" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -5)
+script = ExtResource("4_tfamw")
+source_traits = Array[ExtResource("5_dm5o4")]([ExtResource("7_roll")])
+display_name = "Capsule Memory"
+despawn_on_absorb = true
+
+[node name="Sprite3D" type="Sprite3D" parent="Capsule Memory"]
+pixel_size = 0.0025
+billboard = 1
+alpha_cut = 1
+texture = ExtResource("3_jum3j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Capsule Memory"]
+shape = SubResource("BoxShape3D_absorbable")
+
+[node name="AbsorbArea" type="Area3D" parent="Capsule Memory"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Capsule Memory/AbsorbArea"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("SphereShape3D_2ro2b")
+
+[node name="PromptLabel" type="Label3D" parent="Capsule Memory"]
+billboard = 1
+text = "Capsule Memory"
+font_size = 96
+outline_size = 24
+
+[node name="Corgi Dog" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, -4)
+script = ExtResource("4_tfamw")
+source_traits = Array[ExtResource("5_dm5o4")]([ExtResource("8_corgi")])
+display_name = "Corgi Dog"
+despawn_on_absorb = true
+
+[node name="Sprite3D" type="Sprite3D" parent="Corgi Dog"]
+pixel_size = 0.0025
+billboard = 1
+alpha_cut = 1
+texture = ExtResource("3_jum3j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Corgi Dog"]
+shape = SubResource("BoxShape3D_absorbable")
+
+[node name="AbsorbArea" type="Area3D" parent="Corgi Dog"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Corgi Dog/AbsorbArea"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("SphereShape3D_2ro2b")
+
+[node name="PromptLabel" type="Label3D" parent="Corgi Dog"]
+billboard = 1
+text = "Corgi Dog"
+font_size = 96
+outline_size = 24
+
+[node name="Kucing Oren" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, -4)
+script = ExtResource("4_tfamw")
+source_traits = Array[ExtResource("5_dm5o4")]([ExtResource("9_catpaws"), ExtResource("10_meow")])
+display_name = "Kucing Oren"
+despawn_on_absorb = true
+
+[node name="Sprite3D" type="Sprite3D" parent="Kucing Oren"]
+pixel_size = 0.0025
+billboard = 1
+alpha_cut = 1
+texture = ExtResource("3_jum3j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Kucing Oren"]
+shape = SubResource("BoxShape3D_absorbable")
+
+[node name="AbsorbArea" type="Area3D" parent="Kucing Oren"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Kucing Oren/AbsorbArea"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("SphereShape3D_2ro2b")
+
+[node name="PromptLabel" type="Label3D" parent="Kucing Oren"]
+billboard = 1
+text = "Kucing Oren"
+font_size = 96
+outline_size = 24
+
+[node name="Sugar Glider" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 2, 4)
+script = ExtResource("4_tfamw")
+source_traits = Array[ExtResource("5_dm5o4")]([ExtResource("13_glide")])
+display_name = "Sugar Glider"
+despawn_on_absorb = true
+
+[node name="Sprite3D" type="Sprite3D" parent="Sugar Glider"]
+pixel_size = 0.0025
+billboard = 1
+alpha_cut = 1
+texture = ExtResource("3_jum3j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sugar Glider"]
+shape = SubResource("BoxShape3D_absorbable")
+
+[node name="AbsorbArea" type="Area3D" parent="Sugar Glider"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sugar Glider/AbsorbArea"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("SphereShape3D_2ro2b")
+
+[node name="PromptLabel" type="Label3D" parent="Sugar Glider"]
+billboard = 1
+text = "Sugar Glider"
+font_size = 96
+outline_size = 24
+
+[node name="Human Dummy" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 8)
+script = ExtResource("4_tfamw")
+source_traits = Array[ExtResource("5_dm5o4")]([ExtResource("14_hands")])
+display_name = "Human Dummy"
+despawn_on_absorb = true
+
+[node name="Sprite3D" type="Sprite3D" parent="Human Dummy"]
+pixel_size = 0.0025
+billboard = 1
+alpha_cut = 1
+texture = ExtResource("3_jum3j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Human Dummy"]
+shape = SubResource("BoxShape3D_absorbable")
+
+[node name="AbsorbArea" type="Area3D" parent="Human Dummy"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Human Dummy/AbsorbArea"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("SphereShape3D_2ro2b")
+
+[node name="PromptLabel" type="Label3D" parent="Human Dummy"]
+billboard = 1
+text = "Human Dummy"
+font_size = 96
+outline_size = 24
+
+[node name="Dog" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 2, 8)
+script = ExtResource("4_tfamw")
+source_traits = Array[ExtResource("5_dm5o4")]([ExtResource("15_bark")])
+display_name = "Dog"
+despawn_on_absorb = true
+
+[node name="Sprite3D" type="Sprite3D" parent="Dog"]
+pixel_size = 0.0025
+billboard = 1
+alpha_cut = 1
+texture = ExtResource("3_jum3j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dog"]
+shape = SubResource("BoxShape3D_absorbable")
+
+[node name="AbsorbArea" type="Area3D" parent="Dog"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dog/AbsorbArea"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("SphereShape3D_2ro2b")
+
+[node name="PromptLabel" type="Label3D" parent="Dog"]
+billboard = 1
+text = "Dog"
+font_size = 96
+outline_size = 24
+
+[node name="Roll Tunnel Gate" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -10)
+script = ExtResource("16_gate")
+required_abilities = PackedStringArray("roll")
+display_name = "Roll Tunnel"
+success_text = "You flattened through the tunnel."
+failure_text = "Need"
+
+[node name="GateBlock" type="CSGBox3D" parent="Roll Tunnel Gate"]
+size = Vector3(4, 2.5, 0.75)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Roll Tunnel Gate"]
+shape = SubResource("BoxShape3D_gate")
+
+[node name="GateArea" type="Area3D" parent="Roll Tunnel Gate"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Roll Tunnel Gate/GateArea"]
+shape = SubResource("BoxShape3D_gate_area")
+
+[node name="PromptLabel" type="Label3D" parent="Roll Tunnel Gate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+billboard = 1
+text = "Roll Tunnel"
+font_size = 80
+outline_size = 24
+
+[node name="Low Gap Gate" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.25, -10)
+script = ExtResource("16_gate")
+required_abilities = PackedStringArray("small_legs")
+display_name = "Low Gap"
+success_text = "Tiny legs sneak through."
+failure_text = "Need"
+
+[node name="GateBlock" type="CSGBox3D" parent="Low Gap Gate"]
+size = Vector3(4, 2.5, 0.75)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Low Gap Gate"]
+shape = SubResource("BoxShape3D_gate")
+
+[node name="GateArea" type="Area3D" parent="Low Gap Gate"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Low Gap Gate/GateArea"]
+shape = SubResource("BoxShape3D_gate_area")
+
+[node name="PromptLabel" type="Label3D" parent="Low Gap Gate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+billboard = 1
+text = "Low Gap"
+font_size = 80
+outline_size = 24
+
+[node name="Canopy Combo Gate" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.25, -10)
+script = ExtResource("16_gate")
+required_abilities = PackedStringArray("double_jump", "glide")
+display_name = "Canopy Gap"
+success_text = "Double jump plus glide carries you across."
+failure_text = "Need"
+
+[node name="GateBlock" type="CSGBox3D" parent="Canopy Combo Gate"]
+size = Vector3(4, 2.5, 0.75)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Canopy Combo Gate"]
+shape = SubResource("BoxShape3D_gate")
+
+[node name="GateArea" type="Area3D" parent="Canopy Combo Gate"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Canopy Combo Gate/GateArea"]
+shape = SubResource("BoxShape3D_gate_area")
+
+[node name="PromptLabel" type="Label3D" parent="Canopy Combo Gate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+billboard = 1
+text = "Canopy Gap"
+font_size = 80
+outline_size = 24
+
+[node name="Crate Puzzle Gate" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 1.25, 10)
+script = ExtResource("16_gate")
+required_abilities = PackedStringArray("push_pull")
+display_name = "Crate Puzzle"
+success_text = "Hands move the crate aside."
+failure_text = "Need"
+
+[node name="GateBlock" type="CSGBox3D" parent="Crate Puzzle Gate"]
+size = Vector3(4, 2.5, 0.75)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Crate Puzzle Gate"]
+shape = SubResource("BoxShape3D_gate")
+
+[node name="GateArea" type="Area3D" parent="Crate Puzzle Gate"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Crate Puzzle Gate/GateArea"]
+shape = SubResource("BoxShape3D_gate_area")
+
+[node name="PromptLabel" type="Label3D" parent="Crate Puzzle Gate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+billboard = 1
+text = "Crate Puzzle"
+font_size = 80
+outline_size = 24
+
+[node name="Tongue Switch Gate" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1.25, 10)
+script = ExtResource("16_gate")
+required_abilities = PackedStringArray("sticky_tongue")
+display_name = "Distant Switch"
+success_text = "Sticky tongue hits the far switch."
+failure_text = "Need"
+
+[node name="GateBlock" type="CSGBox3D" parent="Tongue Switch Gate"]
+size = Vector3(4, 2.5, 0.75)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Tongue Switch Gate"]
+shape = SubResource("BoxShape3D_gate")
+
+[node name="GateArea" type="Area3D" parent="Tongue Switch Gate"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Tongue Switch Gate/GateArea"]
+shape = SubResource("BoxShape3D_gate_area")
+
+[node name="PromptLabel" type="Label3D" parent="Tongue Switch Gate"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
+billboard = 1
+text = "Distant Switch"
+font_size = 80
+outline_size = 24
+
+[node name="GladeHeart" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, -13)
+billboard = 1
+text = "Glade Heart: collect traits, equip parts, solve gates."
+font_size = 72
+outline_size = 24
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=545337851]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
